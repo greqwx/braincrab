@@ -2,11 +2,12 @@
 
 use serenity::all::CreateCommand;
 
-use super::{avatar_command, bot_command, help_command, ping_command};
+use super::{avatar_command, bot_command, help_command, ping_command, sysinfo_command};
 
 pub const ALL: &[fn() -> CreateCommand<'static>] = &[
     avatar_command::register,
     bot_command::register,
     help_command::register,
     ping_command::register,
+    sysinfo_command::register,
 ];

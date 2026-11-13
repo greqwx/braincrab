@@ -41,7 +41,6 @@ fn build_container(commands: Option<&[Command]>) -> CreateContainer<'static> {
         CreateContainerComponent::TextDisplay(header),
         CreateContainerComponent::TextDisplay(body),
     ])
-    .accent_color(0xf64c02)
 }
 
 async fn fetch_commands(ctx: &Context) -> Option<Vec<Command>> {

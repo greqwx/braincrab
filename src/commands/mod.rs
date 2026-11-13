@@ -5,6 +5,7 @@ mod bot_command;
 mod help_command;
 mod ping_command;
 mod registry;
+mod sysinfo_command;
 
 use serenity::all::{Command, CommandInteraction};
 use serenity::prelude::Context;
@@ -22,6 +23,7 @@ pub async fn dispatch(ctx: &Context, interaction: &CommandInteraction) {
         "bot" => bot_command::run(ctx, interaction).await,
         "help" => help_command::run(ctx, interaction).await,
         "ping" => ping_command::run(ctx, interaction).await,
+        "sysinfo" => sysinfo_command::run(ctx, interaction).await,
         _ => return,
     };
 

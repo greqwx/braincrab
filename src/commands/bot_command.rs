@@ -31,7 +31,6 @@ fn build_container() -> CreateContainer<'static> {
         CreateContainerComponent::TextDisplay(versions),
         CreateContainerComponent::TextDisplay(footer),
     ])
-    .accent_color(0xf64c02)
 }
 
 pub async fn run(ctx: &Context, interaction: &CommandInteraction) -> Result<(), serenity::Error> {

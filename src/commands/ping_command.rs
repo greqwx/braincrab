@@ -30,7 +30,6 @@ fn build_container(latency: Option<u128>) -> CreateContainer<'static> {
         CreateContainerComponent::TextDisplay(header),
         CreateContainerComponent::TextDisplay(body),
     ])
-    .accent_color(0xf64c02)
 }
 
 pub async fn run(ctx: &Context, interaction: &CommandInteraction) -> Result<(), serenity::Error> {
