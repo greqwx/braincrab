@@ -28,6 +28,7 @@ fn build_container(display_name: &str, avatar_url: &str) -> CreateContainer<'sta
         CreateContainerComponent::TextDisplay(body),
         CreateContainerComponent::MediaGallery(gallery),
     ])
+    .accent_color(0xf64c02)
 }
 
 pub async fn run(ctx: &Context, interaction: &CommandInteraction) -> Result<(), serenity::Error> {
