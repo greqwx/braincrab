@@ -1,0 +1,13 @@
+[package]
+name = "discord-bot"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serenity = { git = "https://github.com/serenity-rs/serenity", rev = "a265dcc", default-features = false, features = [
+    "gateway",
+    "rustls_backend",
+    "model",
+    "unstable",
+] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
