@@ -18,7 +18,7 @@ pub fn register() -> CreateCommand<'static> {
 }
 
 fn build_container(display_name: &str, avatar_url: &str) -> CreateContainer<'static> {
-    let header = CreateTextDisplay::new(format!("### /commands/avatar"));
+    let header = CreateTextDisplay::new(format!("`/commands/avatar`"));
     let body = CreateTextDisplay::new(format!("показан аватар **{display_name}:**"));
     let media = CreateUnfurledMediaItem::new(avatar_url.to_string());
     let gallery = CreateMediaGallery::new(vec![CreateMediaGalleryItem::new(media)]);

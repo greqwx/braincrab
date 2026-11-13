@@ -1,9 +1,9 @@
 // Copyright (c) 2026 Greg, l1acy
 
 use serenity::all::{
-    CommandInteraction, CreateCommand, CreateComponent, CreateContainer,
-    CreateContainerComponent, CreateInteractionResponse, CreateInteractionResponseMessage,
-    CreateSeparator, CreateTextDisplay, MessageFlags,
+    CommandInteraction, CreateCommand, CreateComponent, CreateContainer, CreateContainerComponent,
+    CreateInteractionResponse, CreateInteractionResponseMessage, CreateSeparator,
+    CreateTextDisplay, MessageFlags,
 };
 use serenity::prelude::Context;
 
@@ -12,7 +12,7 @@ pub fn register() -> CreateCommand<'static> {
 }
 
 fn build_container() -> CreateContainer<'static> {
-    let header = CreateTextDisplay::new("### /commands/bot");
+    let header = CreateTextDisplay::new("`/commands/bot`");
 
     let body = CreateTextDisplay::new(
         "привет! я open-source бот, написанный на Rust.\nсделано с любовью от людей для людей <3",
