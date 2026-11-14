@@ -8,8 +8,10 @@ use serenity::all::{
 use serenity::prelude::Context;
 use sysinfo::{Disks, System};
 
+pub const NAME: &str = "sysinfo";
+
 pub fn register() -> CreateCommand<'static> {
-    CreateCommand::new("sysinfo").description("Показать состояние системы, где работает бот")
+    CreateCommand::new(NAME).description("Показать состояние системы, где работает бот")
 }
 
 fn human_uptime(seconds: u64) -> String {

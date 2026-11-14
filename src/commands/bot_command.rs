@@ -7,8 +7,10 @@ use serenity::all::{
 };
 use serenity::prelude::Context;
 
+pub const NAME: &str = "bot";
+
 pub fn register() -> CreateCommand<'static> {
-    CreateCommand::new("bot").description("Показать информацию о боте")
+    CreateCommand::new(NAME).description("Показать информацию о боте")
 }
 
 fn build_container() -> CreateContainer<'static> {

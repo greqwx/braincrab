@@ -8,8 +8,10 @@ use serenity::all::{
 };
 use serenity::prelude::Context;
 
+pub const NAME: &str = "avatar";
+
 pub fn register() -> CreateCommand<'static> {
-    CreateCommand::new("avatar")
+    CreateCommand::new(NAME)
         .description("Показать аватар пользователя")
         .add_option(
             CreateCommandOption::new(CommandOptionType::User, "user", "Чей аватар показать")

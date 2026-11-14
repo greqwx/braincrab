@@ -9,6 +9,8 @@ use serenity::all::{
 };
 use serenity::prelude::Context;
 
+pub const NAME: &str = "userinfo";
+
 /// Общие для `Member` и `PartialMember` поля, которые нужны этой команде.
 struct GuildMemberInfo<'a> {
     nick: Option<&'a str>,
@@ -17,7 +19,7 @@ struct GuildMemberInfo<'a> {
 }
 
 pub fn register() -> CreateCommand<'static> {
-    CreateCommand::new("userinfo")
+    CreateCommand::new(NAME)
         .description("Показать информацию о пользователе")
         .add_option(
             CreateCommandOption::new(CommandOptionType::User, "user", "О ком показать информацию")

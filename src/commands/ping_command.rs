@@ -9,8 +9,10 @@ use serenity::all::{
 };
 use serenity::prelude::Context;
 
+pub const NAME: &str = "ping";
+
 pub fn register() -> CreateCommand<'static> {
-    CreateCommand::new("ping").description("Проверить задержку бота")
+    CreateCommand::new(NAME).description("Проверить задержку бота")
 }
 
 async fn measure_latency(http: &Http) -> Option<u128> {

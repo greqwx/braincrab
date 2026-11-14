@@ -13,21 +13,25 @@ use serenity::all::{Command, CommandInteraction};
 use serenity::prelude::Context;
 
 pub async fn register_all(ctx: &Context) -> Result<(), serenity::Error> {
-    for register in registry::ALL {
-        Command::create_global_command(&ctx.http, register()).await?;
+    for entry in registry::ALL {
+        let registry::Entry::Command(entry) = entry else {
+            continue;
+        };
+
+        Command::create_global_command(&ctx.http, (entry.register)()).await?;
     }
     Ok(())
 }
 
 pub async fn dispatch(ctx: &Context, interaction: &CommandInteraction) {
     let result = match interaction.data.name.as_str() {
-        "avatar" => avatar_command::run(ctx, interaction).await,
-        "bot" => bot_command::run(ctx, interaction).await,
-        "help" => help_command::run(ctx, interaction).await,
-        "ping" => ping_command::run(ctx, interaction).await,
-        "purge" => purge_command::run(ctx, interaction).await,
-        "sysinfo" => sysinfo_command::run(ctx, interaction).await,
-        "userinfo" => userinfo_command::run(ctx, interaction).await,
+        avatar_command::NAME => avatar_command::run(ctx, interaction).await,
+        bot_command::NAME => bot_command::run(ctx, interaction).await,
+        help_command::NAME => help_command::run(ctx, interaction).await,
+        ping_command::NAME => ping_command::run(ctx, interaction).await,
+        purge_command::NAME => purge_command::run(ctx, interaction).await,
+        sysinfo_command::NAME => sysinfo_command::run(ctx, interaction).await,
+        userinfo_command::NAME => userinfo_command::run(ctx, interaction).await,
         _ => return,
     };
 

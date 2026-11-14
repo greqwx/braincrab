@@ -18,8 +18,10 @@ const BULK_LIMIT: usize = 100;
 const MAX_SCAN: usize = 500;
 const TWO_WEEKS: i64 = 14 * 24 * 60 * 60;
 
+pub const NAME: &str = "purge";
+
 pub fn register() -> CreateCommand<'static> {
-    CreateCommand::new("purge")
+    CreateCommand::new(NAME)
         .description("Удалить сообщения в канале")
         .add_option(
             CreateCommandOption::new(
