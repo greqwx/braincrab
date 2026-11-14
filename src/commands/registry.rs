@@ -3,7 +3,8 @@
 use serenity::all::CreateCommand;
 
 use super::{
-    avatar_command, bot_command, help_command, ping_command, sysinfo_command, userinfo_command,
+    avatar_command, bot_command, help_command, ping_command, purge_command, sysinfo_command,
+    userinfo_command,
 };
 
 pub const ALL: &[fn() -> CreateCommand<'static>] = &[
@@ -11,6 +12,7 @@ pub const ALL: &[fn() -> CreateCommand<'static>] = &[
     bot_command::register,
     help_command::register,
     ping_command::register,
+    purge_command::register,
     sysinfo_command::register,
     userinfo_command::register,
 ];

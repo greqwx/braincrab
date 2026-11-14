@@ -2,6 +2,7 @@
 
 mod commands;
 mod config;
+mod consts;
 mod handler;
 
 use std::sync::Arc;

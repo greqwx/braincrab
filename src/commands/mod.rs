@@ -4,6 +4,7 @@ mod avatar_command;
 mod bot_command;
 mod help_command;
 mod ping_command;
+mod purge_command;
 mod registry;
 mod sysinfo_command;
 mod userinfo_command;
@@ -24,6 +25,7 @@ pub async fn dispatch(ctx: &Context, interaction: &CommandInteraction) {
         "bot" => bot_command::run(ctx, interaction).await,
         "help" => help_command::run(ctx, interaction).await,
         "ping" => ping_command::run(ctx, interaction).await,
+        "purge" => purge_command::run(ctx, interaction).await,
         "sysinfo" => sysinfo_command::run(ctx, interaction).await,
         "userinfo" => userinfo_command::run(ctx, interaction).await,
         _ => return,
