@@ -2,7 +2,8 @@
 
 use serenity::all::{
     CommandInteraction, CreateCommand, CreateComponent, CreateContainer, CreateContainerComponent,
-    CreateInteractionResponse, CreateInteractionResponseMessage, CreateTextDisplay, MessageFlags,
+    CreateInteractionResponse, CreateInteractionResponseMessage, CreateSeparator,
+    CreateTextDisplay, MessageFlags,
 };
 use serenity::prelude::Context;
 use sysinfo::{Disks, System};
@@ -27,7 +28,13 @@ fn gib(bytes: u64) -> f64 {
     bytes as f64 / 1024.0 / 1024.0 / 1024.0
 }
 
-fn build_body(system: &System, disks: Option<&Disks>) -> String {
+struct SysinfoSections {
+    base: String,
+    resources: String,
+    uptime: String,
+}
+
+fn build_sections(system: &System, disks: Option<&Disks>) -> SysinfoSections {
     let os = System::long_os_version()
         .ok()
         .or_else(|| System::os_version().ok())
@@ -56,37 +63,69 @@ fn build_body(system: &System, disks: Option<&Disks>) -> String {
         .map(|process| process.run_time())
         .unwrap_or(0);
 
-    [
+    let base = [
         format!("ос: `{os}`"),
         format!("ядро: `{kernel}`"),
         format!("хост: `{host}`"),
-        format!(
-            "аптайм системы: `{}`",
-            human_uptime(System::uptime().unwrap_or(0))
-        ),
+    ]
+    .join("\n");
+
+    let resources = [
         format!("cpu: `{cpu}`"),
+        format!("диск: `{disk}`"),
         format!(
             "память: `{:.1} / {:.1}` GiB",
             gib(system.used_memory()),
             gib(system.total_memory()),
         ),
-        format!("диск: `{disk}`"),
+    ]
+    .join("\n");
+
+    let uptime = [
+        format!(
+            "аптайм ос: `{}`",
+            human_uptime(System::uptime().unwrap_or(0))
+        ),
         format!("аптайм бота: `{}`", human_uptime(bot_uptime)),
     ]
-    .join("\n")
+    .join("\n");
+
+    SysinfoSections {
+        base,
+        resources,
+        uptime,
+    }
 }
 
 fn build_container(system: Option<&System>, disks: Option<&Disks>) -> CreateContainer<'static> {
     let header = CreateTextDisplay::new("`/commands/sysinfo`");
-    let body = CreateTextDisplay::new(match system {
-        Some(system) => build_body(system, disks),
-        None => "не удалось собрать данные о системе".to_string(),
-    });
 
-    CreateContainer::new(vec![
-        CreateContainerComponent::TextDisplay(header),
-        CreateContainerComponent::TextDisplay(body),
-    ])
+    let mut components = vec![CreateContainerComponent::TextDisplay(header)];
+
+    match system {
+        Some(system) => {
+            let sections = build_sections(system, disks);
+
+            components.push(CreateContainerComponent::TextDisplay(
+                CreateTextDisplay::new(sections.base),
+            ));
+            components.push(CreateContainerComponent::Separator(CreateSeparator::new()));
+            components.push(CreateContainerComponent::TextDisplay(
+                CreateTextDisplay::new(sections.resources),
+            ));
+            components.push(CreateContainerComponent::Separator(CreateSeparator::new()));
+            components.push(CreateContainerComponent::TextDisplay(
+                CreateTextDisplay::new(sections.uptime),
+            ));
+        }
+        None => {
+            components.push(CreateContainerComponent::TextDisplay(
+                CreateTextDisplay::new("не удалось собрать данные о системе"),
+            ));
+        }
+    }
+
+    CreateContainer::new(components)
 }
 
 pub async fn run(ctx: &Context, interaction: &CommandInteraction) -> Result<(), serenity::Error> {
