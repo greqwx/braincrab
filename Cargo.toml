@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 serenity = { git = "https://github.com/serenity-rs/serenity", rev = "a265dcc", default-features = false, features = [
+    "cache",
     "gateway",
     "rustls_backend",
     "model",

@@ -11,6 +11,8 @@ pub struct Handler;
 #[async_trait]
 impl EventHandler for Handler {
     async fn dispatch(&self, ctx: &Context, event: &FullEvent) {
+        crate::audit::handle(ctx, event);
+
         match event {
             FullEvent::Ready { data_about_bot, .. } => {
                 println!("вход выполнен под именем {}", data_about_bot.user.name);
